@@ -32,4 +32,14 @@ class Ch2Spec extends FunSpec {
       assert(f2(1)(2) == 3)
     }
   }
+
+  describe("uncurry") {
+    it("uncurries") {
+      val f1 = (a: Int, b: Int) => a + b
+      val f2 = Ch2.curry(f1)
+      val f3 = Ch2.uncurry(f2)
+
+      assert(f3(1, 2) == 3)
+    }
+  }
 }
