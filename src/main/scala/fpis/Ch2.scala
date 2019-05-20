@@ -19,5 +19,6 @@ object Ch2 {
     }
 
     // Exercise 2.2
-    def isSorted[A](as: Array[A], ordered: (A,A) => Boolean): Boolean = false
+    def isSorted[A](as: Array[A], ordered: (A,A) => Boolean): Boolean =
+      as.sliding(2).find(a => !ordered(a(0), a(1))) isEmpty
 }

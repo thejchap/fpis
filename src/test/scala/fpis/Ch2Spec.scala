@@ -15,6 +15,12 @@ class Ch2Spec extends FunSpec {
   }
 
   describe("isSorted") {
-    it("returns whether an array is sorted via a given function") (pending)
+    it("returns true if an array is sorted") {
+      assert(Ch2.isSorted(Array(1, 2, 3, 4), (x: Int, y: Int) => x < y))
+    }
+
+    it("returns false if an array isn't sorted") {
+      assert(!Ch2.isSorted(Array(3, 2, 1, 4), (x: Int, y: Int) => x < y))
+    }
   }
 }
