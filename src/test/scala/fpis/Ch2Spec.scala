@@ -23,4 +23,13 @@ class Ch2Spec extends FunSpec {
       assert(!Ch2.isSorted(Array(3, 2, 1, 4), (x: Int, y: Int) => x < y))
     }
   }
+
+  describe("curry") {
+    it("curries") {
+      val f1 = (a: Int, b: Int) => a + b
+      val f2 = Ch2.curry(f1)
+
+      assert(f2(1)(2) == 3)
+    }
+  }
 }
