@@ -48,5 +48,23 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.setHead(Nil, 5) == SinglyLinkedList(5))
       }
     }
+    describe("Exercise 3.4 - drop") {
+      it("drops the first n elements from the list") {
+        val list1 = SinglyLinkedList(1, 2, 3, 4, 5)
+        val list2 = SinglyLinkedList(4, 5)
+
+        assert(SinglyLinkedList.drop(list1, 3) == list2)
+      }
+      it("works with 1 element") {
+        val list = SinglyLinkedList(1)
+
+        assert(SinglyLinkedList.drop(list, 3) == Nil)
+      }
+      it("works with 0 arg") {
+        val list = SinglyLinkedList(1, 2)
+
+        assert(SinglyLinkedList.drop(list, 0) == list)
+      }
+    }
   }
 }

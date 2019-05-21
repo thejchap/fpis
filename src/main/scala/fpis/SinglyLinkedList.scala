@@ -16,14 +16,20 @@ object SinglyLinkedList {
     case Cons(x, xs) => x * product(xs)
   }
 
-  def tail[A](list: SinglyLinkedList[A]): SinglyLinkedList[A] = list match {
+  def tail[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] = l match {
     case Nil => Nil
     case Cons(_, xs) => xs
   }
 
-  def setHead[A](list: SinglyLinkedList[A], head: A): SinglyLinkedList[A] = list match {
-    case Nil => apply(head)
-    case Cons(_, xs) => Cons(head, xs)
+  def setHead[A](l: SinglyLinkedList[A], x: A): SinglyLinkedList[A] = l match {
+    case Nil => apply(x)
+    case Cons(_, xs) => Cons(x, xs)
+  }
+
+  def drop[A](l: SinglyLinkedList[A], n: Int): SinglyLinkedList[A] = (l, n) match {
+    case (Nil, _) => Nil
+    case (_, 0) => l
+    case (Cons(_, xs), _) => drop(xs, n - 1)
   }
 
   def apply[A](as: A*): SinglyLinkedList[A] =
