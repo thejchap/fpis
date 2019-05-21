@@ -16,6 +16,11 @@ object SinglyLinkedList {
     case Cons(x, xs) => x * product(xs)
   }
 
+  def tail[A](list: SinglyLinkedList[A]): SinglyLinkedList[A] = list match {
+    case Nil => Nil
+    case Cons(_, xs) => xs
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
