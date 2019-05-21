@@ -21,6 +21,11 @@ object SinglyLinkedList {
     case Cons(_, xs) => xs
   }
 
+  def setHead[A](list: SinglyLinkedList[A], head: A): SinglyLinkedList[A] = list match {
+    case Nil => apply(head)
+    case Cons(_, xs) => Cons(head, xs)
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))

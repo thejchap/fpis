@@ -37,5 +37,16 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.tail(list1) == list2)
       }
     }
+    describe("Exercise 3.3 - setHead") {
+      it("replaces the head of the list") {
+        val list1 = SinglyLinkedList(1, 2, 3, 4, 5)
+        val list2 = SinglyLinkedList(6, 2, 3, 4, 5)
+
+        assert(SinglyLinkedList.setHead(list1, 6) == list2)
+      }
+      it("works for Nil") {
+        assert(SinglyLinkedList.setHead(Nil, 5) == SinglyLinkedList(5))
+      }
+    }
   }
 }
