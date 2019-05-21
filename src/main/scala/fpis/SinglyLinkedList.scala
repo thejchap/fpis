@@ -27,12 +27,15 @@ object SinglyLinkedList {
   }
 
   def drop[A](l: SinglyLinkedList[A], n: Int): SinglyLinkedList[A] = (l, n) match {
-    case (Nil, _) => Nil
+    case (Nil, _) => l
     case (_, 0) => l
     case (Cons(_, xs), _) => drop(xs, n - 1)
   }
 
-  def dropWhile[A](l: SinglyLinkedList[A], f: A => Boolean): SinglyLinkedList[A] = apply()
+  def dropWhile[A](l: SinglyLinkedList[A], f: A => Boolean): SinglyLinkedList[A] = l match {
+    case Cons(x, xs) if f(x) => dropWhile(xs, f)
+    case _ => l
+  }
 
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil

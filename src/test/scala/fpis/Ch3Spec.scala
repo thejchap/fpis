@@ -67,13 +67,13 @@ class Ch3Spec extends FunSpec {
       }
     }
     describe("Exercise 3.5 - dropWhile") {
-      // it("drops while elements match a given predicate") {
-        // val list1 = SinglyLinkedList(1, 2, 3, 4, 5)
-        // val list2 = SinglyLinkedList(4, 5)
-        // val pred = (a: Int) => a < 4
-//
-        // assert(SinglyLinkedList.dropWhile(list1, pred) == list2)
-      // }
+      it("drops while elements match a given predicate") {
+        val list1 = SinglyLinkedList(1, 2, 3, 4, 5)
+        val list2 = SinglyLinkedList(4, 5)
+        val pred = (a: Int) => a < 4
+
+        assert(SinglyLinkedList.dropWhile(list1, pred) == list2)
+      }
     }
   }
 }
