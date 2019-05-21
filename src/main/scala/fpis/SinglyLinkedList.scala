@@ -32,6 +32,8 @@ object SinglyLinkedList {
     case (Cons(_, xs), _) => drop(xs, n - 1)
   }
 
+  def dropWhile[A](l: SinglyLinkedList[A], f: A => Boolean): SinglyLinkedList[A] = apply()
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
