@@ -16,16 +16,18 @@ class AVLTreeSpec extends FunSpec with BeforeAndAfter {
     describe("insert") {
       it("inserts a leaf if the tree is Nil") {
         val result = AVLTree.insert(Nil, "a", compare)
-        assert(result.k == "a")
+        assert(result.key == "a")
         assert(result.lr == (Nil, Nil))
-        assert(result.h == 1)
+        assert(result.height == 1)
+        assert(result.balance == 0)
       }
       it("overwrites k if new k == k") {
         val tree1 = AVLTree.insert(Nil, "a", compare)
         val tree2 = AVLTree.insert(tree1, "a", compare)
 
-        assert(tree2.h == 1)
-        assert(tree2.k == "a")
+        assert(tree2.height == 1)
+        assert(tree2.key == "a")
+        assert(tree2.balance == 0)
 
         val l = tree2.lr._1
         val r = tree2.lr._2
@@ -37,37 +39,51 @@ class AVLTreeSpec extends FunSpec with BeforeAndAfter {
         val tree1 = AVLTree.insert(Nil, "a", compare)
         val tree2 = AVLTree.insert(tree1, "c", compare)
 
-        assert(tree2.h == 2)
-        assert(tree2.k == "a")
+        assert(tree2.height == 2)
+        assert(tree2.key == "a")
+        assert(tree2.balance == 1)
 
         val l = tree2.lr._1
         val r = tree2.lr._2
 
         assert(l == Nil)
-        assert(r.k == "c")
-        assert(r.h == 1)
+        assert(r.key == "c")
+        assert(r.height == 1)
       }
       it("inserts a leaf to the left if the key is < current key") {
         val tree1 = AVLTree.insert(Nil, "c", compare)
         val tree2 = AVLTree.insert(tree1, "a", compare)
 
-        assert(tree2.h == 2)
-        assert(tree2.k == "c")
+        assert(tree2.height == 2)
+        assert(tree2.key == "c")
+        assert(tree2.balance == -1)
 
         val l = tree2.lr._1
         val r = tree2.lr._2
 
         assert(r == Nil)
-        assert(l.k == "a")
-        assert(l.h == 1)
+        assert(l.key == "a")
+        assert(l.height == 1)
       }
       it("recursively inserts right") {
         val tree1 = AVLTree.insert(Nil, "a", compare)
         val tree2 = AVLTree.insert(tree1, "c", compare)
-        val tree = AVLTree.insert(tree2, "e", compare)
+        val tree3 = AVLTree.insert(tree2, "e", compare)
 
-        assert(tree.k == "a")
-        assert(tree.h == 3)
+        assert(tree3.key == "a")
+        assert(tree3.height == 3)
+        assert(tree3.balance == 2)
+      }
+      it("integration test 1") {
+        val tree1 = AVLTree.insert(Nil, "b", compare)
+        val tree2 = AVLTree.insert(tree1, "a", compare)
+        val tree3 = AVLTree.insert(tree2, "c", compare)
+        val tree4 = AVLTree.insert(tree3, "d", compare)
+        val tree5 = AVLTree.insert(tree4, "e", compare)
+
+        assert(tree5.key == "b")
+        assert(tree5.height == 4)
+        assert(tree5.balance == 2)
       }
     }
   }

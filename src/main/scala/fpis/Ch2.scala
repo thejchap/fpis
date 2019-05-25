@@ -20,7 +20,7 @@ object Ch2 {
 
     // Exercise 2.2
     def isSorted[A](as: Array[A], ordered: (A, A) => Boolean): Boolean =
-      as.sliding(2).find(a => !ordered(a(0), a(1))) isEmpty
+      as.sliding(2) forall(a => ordered(a(0), a(1)))
 
     // Exercise 2.3
     def curry[A, B, C](f: (A, B) => C): A => (B => C) = (a: A) => (b: B) => f(a, b)
