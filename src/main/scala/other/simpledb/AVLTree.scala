@@ -20,6 +20,10 @@ object AVLTree {
   def insert[T](t: AVLTree[T], k: T, compare: (T, T) => Int): AVLTree[T] =
     balance(bstInsert(t, k, compare))
 
+  def apply[T](k: T, lr: Tuple2[AVLTree[T], AVLTree[T]] = (Nil, Nil)) = {
+    Node(k, lr, makeHeight(lr._1, lr._2), makeBalanceFactor(lr._1, lr._2))
+  }
+
   private def balance[T](t: AVLTree[T]) = t balance match {
     case 0 | 1 | -1 => t
     case 2 => rotateLeft(t)
@@ -28,35 +32,24 @@ object AVLTree {
   }
 
   private def rotateLeft[T](t: AVLTree[T]) = {
-    val (_, z) = t.lr
-    val (t23, t4) = z.lr
-    val newT = apply(t.key, (Nil, t23), t23.height + 1, t23.height)
-    apply(z.key, (newT, t4), 1 + max(newT.height, t4.height), t4.height - newT.height)
+    val (_, r) = t.lr
+    val (l2, r2) = r.lr
+    apply(r.key, (apply(t.key, (Nil, l2)), r2))
   }
 
   private def rotateRight[T](t: AVLTree[T]) = {
-    val (z, _) = t.lr
-    val (t4, t23) = z.lr
-    val newT = apply(t.key, (t23, Nil), t23.height + 1, t23.height)
-    apply(z.key, (t4, newT), 1 + max(newT.height, t4.height), newT.height - t4.height)
+    val (l, _) = t.lr
+    val (l2, r2) = l.lr
+    apply(l.key, (l2, apply(t.key, (r2, Nil))))
   }
 
   private def bstInsert[T](t: AVLTree[T], k: T, compare: (T, T) => Int) = t match {
     case Nil => apply(k)
-    case Node(x, lr, h, b) if compare(k, x) == 0 => apply(k, lr, h, b)
-    case Node(x, (l, r), h, b) if compare(k, x) < 0 => {
-      val l2 = insert(l, k, compare)
-      apply(x, (l2, r), 1 + max(l2.height, r.height),  r.height - l2.height)
-    }
-    case Node(x, (l, r), h, b) if compare(k, x) > 0 => {
-      val r2 = insert(r, k, compare)
-      apply(x, (l, r2), 1 + max(l.height, r2.height),  r2.height - l.height)
-    }
+    case Node(x, lr, _, _) if compare(k, x) == 0 => apply(k, lr)
+    case Node(x, (l, r), _, _) if compare(k, x) < 0 => apply(x, (insert(l, k, compare), r))
+    case Node(x, (l, r), _, _) if compare(k, x) > 0 => apply(x, (l, insert(r, k, compare)))
   }
 
-  def apply[T](
-    k: T,
-    lr: Tuple2[AVLTree[T], AVLTree[T]] = (Nil, Nil),
-    h: Int = 1,
-    b: Int = 0) = Node(k, lr, h, b)
+  private def makeBalanceFactor[T](l: AVLTree[T], r: AVLTree[T]) = r.height - l.height
+  private def makeHeight[T](l: AVLTree[T], r: AVLTree[T]) = 1 + max(l.height, r.height)
 }
