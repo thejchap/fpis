@@ -27,8 +27,19 @@ object AVLTree {
     case _ => Nil
   }
 
-  private def rotateLeft[T](t: AVLTree[T]) = t
-  private def rotateRight[T](t: AVLTree[T]) = t
+  private def rotateLeft[T](t: AVLTree[T]) = {
+    val (_, z) = t.lr
+    val (t23, t4) = z.lr
+    val newT = apply(t.key, (Nil, t23), t23.height + 1, t23.height)
+    apply(z.key, (newT, t4), 1 + max(newT.height, t4.height), t4.height - newT.height)
+  }
+
+  private def rotateRight[T](t: AVLTree[T]) = {
+    val (z, _) = t.lr
+    val (t4, t23) = z.lr
+    val newT = apply(t.key, (t23, Nil), t23.height + 1, t23.height)
+    apply(z.key, (t4, newT), 1 + max(newT.height, t4.height), newT.height - t4.height)
+  }
 
   private def bstInsert[T](t: AVLTree[T], k: T, compare: (T, T) => Int) = t match {
     case Nil => apply(k)
