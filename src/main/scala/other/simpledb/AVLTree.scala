@@ -17,39 +17,40 @@ case class Node[T](
   override val balance: Int) extends AVLTree[T]
 
 object AVLTree {
+  type Children[T] = (AVLTree[T], AVLTree[T])
+
   def insert[T](t: AVLTree[T], k: T, compare: (T, T) => Int): AVLTree[T] =
     balance(bstInsert(t, k, compare))
 
-  def apply[T](k: T, lr: Tuple2[AVLTree[T], AVLTree[T]] = (Nil, Nil)) = {
-    Node(k, lr, makeHeight(lr._1, lr._2), makeBalanceFactor(lr._1, lr._2))
+  def apply[T](k: T, lr: Children[T] = (Nil, Nil)) =
+    Node(k, lr, makeHeight(lr), makeBalanceFactor(lr))
+
+  private def bstInsert[T](t: AVLTree[T], k: T, cmp: (T, T) => Int) = t match {
+    case Nil => apply(k)
+    case Node(x, lr, _, _) if cmp(k, x) == 0 => apply(k, lr)
+    case Node(x, (l, r), _, _) if cmp(k, x) < 0 => apply(x, (insert(l, k, cmp), r))
+    case Node(x, (l, r), _, _) if cmp(k, x) > 0 => apply(x, (l, insert(r, k, cmp)))
   }
 
   private def balance[T](t: AVLTree[T]) = t balance match {
     case 0 | 1 | -1 => t
-    case 2 => rotateLeft(t)
-    case -2 => rotateRight(t)
+    case 2 =>
+      rotate(t,
+        (lr: Children[T]) => lr._2,
+        (k: T, lr: Children[T]) => (apply(k, (Nil, lr._1)), lr._2))
+    case -2 =>
+      rotate(t,
+        (lr: Children[T]) => lr._1,
+        (k: T, lr: Children[T]) => (lr._1, apply(k, (lr._2, Nil))))
     case _ => Nil
   }
 
-  private def rotateLeft[T](t: AVLTree[T]) = {
-    val (_, r) = t.lr
-    val (l2, r2) = r.lr
-    apply(r.key, (apply(t.key, (Nil, l2)), r2))
-  }
+  private def makeBalanceFactor[T](lr: Children[T]) = lr._2.height - lr._1.height
 
-  private def rotateRight[T](t: AVLTree[T]) = {
-    val (l, _) = t.lr
-    val (l2, r2) = l.lr
-    apply(l.key, (l2, apply(t.key, (r2, Nil))))
-  }
+  private def makeHeight[T](lr: Children[T]) = 1 + max(lr._1.height, lr._2.height)
 
-  private def bstInsert[T](t: AVLTree[T], k: T, compare: (T, T) => Int) = t match {
-    case Nil => apply(k)
-    case Node(x, lr, _, _) if compare(k, x) == 0 => apply(k, lr)
-    case Node(x, (l, r), _, _) if compare(k, x) < 0 => apply(x, (insert(l, k, compare), r))
-    case Node(x, (l, r), _, _) if compare(k, x) > 0 => apply(x, (l, insert(r, k, compare)))
+  private def rotate[T](t: AVLTree[T], f: Children[T] => AVLTree[T], g: (T, Children[T]) => Children[T]) = {
+    val x = f(t lr)
+    apply(x.key, g(t key, x lr))
   }
-
-  private def makeBalanceFactor[T](l: AVLTree[T], r: AVLTree[T]) = r.height - l.height
-  private def makeHeight[T](l: AVLTree[T], r: AVLTree[T]) = 1 + max(l.height, r.height)
 }
