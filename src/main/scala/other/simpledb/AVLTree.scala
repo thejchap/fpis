@@ -46,11 +46,7 @@ object AVLTree {
   }
 
   private def makeBalanceFactor[T](lr: Children[T]) = lr._2.height - lr._1.height
-
   private def makeHeight[T](lr: Children[T]) = 1 + max(lr._1.height, lr._2.height)
-
-  private def rotate[T](t: AVLTree[T], f: Children[T] => AVLTree[T], g: (T, Children[T]) => Children[T]) = {
-    val x = f(t lr)
-    apply(x.key, g(t key, x lr))
-  }
+  private def rotate[T](t: AVLTree[T], f: Children[T] => AVLTree[T], g: (T, Children[T]) => Children[T]) =
+    apply(f(t lr).key, g(t key, f(t lr) lr))
 }

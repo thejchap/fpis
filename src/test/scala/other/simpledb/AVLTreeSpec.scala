@@ -103,6 +103,19 @@ class AVLTreeSpec extends FunSpec with BeforeAndAfter {
         assert(tree3.height == 2)
         assert(tree3.balance == 0)
       }
+      it("balances deep") {
+        val tree1 = AVLTree.insert(Nil, "a", compare)
+        val tree2 = AVLTree.insert(tree1, "b", compare)
+        val tree3 = AVLTree.insert(tree2, "c", compare)
+        val tree4 = AVLTree.insert(tree3, "d", compare)
+        val tree5 = AVLTree.insert(tree4, "e", compare)
+        val tree6 = AVLTree.insert(tree5, "f", compare)
+        val tree7 = AVLTree.insert(tree6, "g", compare)
+
+        assert(tree7.key == "d")
+        assert(tree7.height == 3)
+        assert(tree7.balance == 0)
+      }
     }
   }
 }
