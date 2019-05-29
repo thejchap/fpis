@@ -1,7 +1,7 @@
 package simpledb
 
 class Index {
-  type KeyValue = (String, String)
+  type KeyValue = (String, Int)
   private var store: AVLTree[KeyValue] = Nil
   private val cmp = (a: KeyValue, b: KeyValue) => {
     if (a._1 > b._1) 1
@@ -10,4 +10,5 @@ class Index {
   }
 
   def insert(v: KeyValue) = store = AVLTree.insert(store, v, cmp)
+  def search(v: KeyValue) = AVLTree.search(store, v, cmp)
 }
