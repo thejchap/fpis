@@ -19,8 +19,15 @@ case class Node[T](
 object AVLTree {
   type Children[T] = (AVLTree[T], AVLTree[T])
 
-  def insert[T](t: AVLTree[T], k: T, compare: (T, T) => Int): AVLTree[T] =
-    balance(bstInsert(t, k, compare))
+  def insert[T](t: AVLTree[T], k: T, cmp: (T, T) => Int): AVLTree[T] =
+    balance(bstInsert(t, k, cmp))
+
+  def search[T](t: AVLTree[T], k: T, cmp: (T, T) => Int): Option[T] = t match {
+    case Nil => None
+    case Node(x, lr, _, _) if cmp(k, x) == 0 => Some(x)
+    case Node(x, (l, r), _, _) if cmp(k, x) < 0 => search(t.lr._1, k, cmp)
+    case Node(x, (l, r), _, _) if cmp(k, x) > 0 => search(t.lr._2, k, cmp)
+  }
 
   def apply[T](k: T, lr: Children[T] = (Nil, Nil)) =
     Node(k, lr, makeHeight(lr), makeBalanceFactor(lr))
