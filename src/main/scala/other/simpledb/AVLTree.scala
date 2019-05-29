@@ -25,8 +25,8 @@ object AVLTree {
   def search[T](t: AVLTree[T], k: T, cmp: (T, T) => Int): Option[T] = t match {
     case Nil => None
     case Node(x, lr, _, _) if cmp(k, x) == 0 => Some(x)
-    case Node(x, (l, r), _, _) if cmp(k, x) < 0 => search(t.lr._1, k, cmp)
-    case Node(x, (l, r), _, _) if cmp(k, x) > 0 => search(t.lr._2, k, cmp)
+    case Node(x, (l, _), _, _) if cmp(k, x) < 0 => search(l, k, cmp)
+    case Node(x, (_, r), _, _) if cmp(k, x) > 0 => search(r, k, cmp)
   }
 
   def apply[T](k: T, lr: Children[T] = (Nil, Nil)) =
