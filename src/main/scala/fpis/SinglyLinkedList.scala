@@ -32,8 +32,8 @@ object SinglyLinkedList {
     case (Cons(_, xs), _) => drop(xs, n - 1)
   }
 
-  def dropWhile[A](l: SinglyLinkedList[A], f: A => Boolean): SinglyLinkedList[A] = l match {
-    case Cons(x, xs) if f(x) => dropWhile(xs, f)
+  def dropWhile[A](l: SinglyLinkedList[A])(f: A => Boolean): SinglyLinkedList[A] = l match {
+    case Cons(x, xs) if f(x) => dropWhile(xs)(f)
     case _ => l
   }
 
