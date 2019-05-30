@@ -75,5 +75,13 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.dropWhile(list1, pred) == list2)
       }
     }
+    describe("Exercise 3.6 - init") {
+      it("creates a new list with all but the last element") {
+        var list1 = SinglyLinkedList(1, 2, 3, 4)
+        var list2 = SinglyLinkedList(1, 2, 3)
+
+        assert(SinglyLinkedList.init(list1) == list2)
+      }
+    }
   }
 }

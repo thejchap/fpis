@@ -40,4 +40,10 @@ object SinglyLinkedList {
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
+
+  def init[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] = l match {
+    case Cons(_, Nil) => Nil
+    case Cons(x, xs) => Cons(x, init(xs))
+    case _ => Nil
+  }
 }
