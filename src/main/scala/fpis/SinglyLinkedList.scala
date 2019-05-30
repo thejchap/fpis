@@ -16,6 +16,14 @@ object SinglyLinkedList {
     case Cons(x, xs) => x * product(xs)
   }
 
+  def foldRight[A, B](as: SinglyLinkedList[A], z: B)(f: (A, B) => B): B = as match {
+    case Nil => z
+    case Cons(x, xs) => f(x, foldRight(xs, z)(f))
+  }
+
+  def sum2(ns: SinglyLinkedList[Int]) = foldRight(ns, 0)(_ + _)
+  def product2(ns: SinglyLinkedList[Double]) = foldRight(ns, 1.0)(_ * _)
+
   def tail[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] = l match {
     case Nil => Nil
     case Cons(_, xs) => xs

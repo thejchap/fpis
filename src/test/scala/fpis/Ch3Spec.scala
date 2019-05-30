@@ -82,5 +82,11 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.init(list1) == list2)
       }
     }
+    describe("Listing 3.2 - foldRight") {
+      it("is a refactor") {
+        assert(SinglyLinkedList.sum2(SinglyLinkedList(1, 2, 3)) == 6)
+        assert(SinglyLinkedList.product2(SinglyLinkedList(3.0, 5.0)) == 15.0)
+      }
+    }
   }
 }
