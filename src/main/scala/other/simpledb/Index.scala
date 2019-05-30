@@ -9,6 +9,6 @@ class Index {
     else 0
   }
 
-  def set(k: String, o: Int) = store = AVLTree.insert(store, (k, o), cmp)
-  def get(k: String): Int = 0
+  def insert(v: KeyValue) = store = AVLTree.insert(store, v, cmp)
+  def search(v: KeyValue) = AVLTree.search(store, v, cmp)
 }

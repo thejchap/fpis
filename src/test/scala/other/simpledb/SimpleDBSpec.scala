@@ -8,7 +8,7 @@ class SimpleDBSpec extends FunSpec {
       db.set("name", "jelly")
       val name = db.get("name")
 
-      assert(name == "jelly")
+      assert(name == Some("jelly"))
     }
   }
 }
