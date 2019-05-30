@@ -23,6 +23,7 @@ object SinglyLinkedList {
 
   def sum2(ns: SinglyLinkedList[Int]) = foldRight(ns, 0)(_ + _)
   def product2(ns: SinglyLinkedList[Double]) = foldRight(ns, 1.0)(_ * _)
+  def length[A](as: SinglyLinkedList[A]): Int = foldRight(as, 0)((_, y) => y + 1)
 
   def tail[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] = l match {
     case Nil => Nil

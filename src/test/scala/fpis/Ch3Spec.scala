@@ -88,5 +88,10 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.product2(SinglyLinkedList(3.0, 5.0)) == 15.0)
       }
     }
+    describe("Exercise 3.9 - length") {
+      it("returns the length of the list") {
+        assert(SinglyLinkedList.length(SinglyLinkedList(1, 2, 3)) == 3)
+      }
+    }
   }
 }
