@@ -1,5 +1,7 @@
 package fpis
 
+import annotation.tailrec
+
 sealed trait SinglyLinkedList[+A]
 case object Nil extends SinglyLinkedList[Nothing]
 case class Cons[+A](head: A, tail: SinglyLinkedList[A]) extends SinglyLinkedList[A]
@@ -21,9 +23,21 @@ object SinglyLinkedList {
     case Cons(x, xs) => f(x, foldRight(xs, z)(f))
   }
 
+  def foldLeft[A, B](as: SinglyLinkedList[A], z: B)(f: (B, A) => B): B = {
+    @tailrec def g(b: B, l: SinglyLinkedList[A]): B = l match {
+      case Nil => b
+      case Cons(x, xs) => g(f(b, x), xs)
+    }
+    g(z, as)
+  }
+
   def sum2(ns: SinglyLinkedList[Int]) = foldRight(ns, 0)(_ + _)
   def product2(ns: SinglyLinkedList[Double]) = foldRight(ns, 1.0)(_ * _)
   def length[A](as: SinglyLinkedList[A]): Int = foldRight(as, 0)((_, y) => y + 1)
+
+  def sum3(ns: SinglyLinkedList[Int]) = foldLeft(ns, 0)(_ + _)
+  def product3(ns: SinglyLinkedList[Double]) = foldLeft(ns, 1.0)(_ * _)
+  def length3[A](as: SinglyLinkedList[A]): Int = foldLeft(as, 0)((y, _) => y + 1)
 
   def tail[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] = l match {
     case Nil => Nil
