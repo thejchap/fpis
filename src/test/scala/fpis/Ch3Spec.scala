@@ -93,11 +93,19 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.length(SinglyLinkedList(1, 2, 3)) == 3)
       }
     }
-    describe("Exercise 3.10 - foldLeft") {
+    describe("Exercise 3.10/11 - foldLeft") {
       it("folds left") {
         assert(SinglyLinkedList.sum3(SinglyLinkedList(1, 2, 3)) == 6)
         assert(SinglyLinkedList.product3(SinglyLinkedList(3.0, 5.0)) == 15.0)
         assert(SinglyLinkedList.length3(SinglyLinkedList(1, 2, 3)) == 3)
+      }
+    }
+    describe("Exercise 3.12 - reverse") {
+      it("reverses a list") {
+        val list1 = SinglyLinkedList(1, 2, 3)
+        val list2 = SinglyLinkedList(3, 2, 1)
+
+        assert(SinglyLinkedList.reverse(list1) == list2)
       }
     }
   }
