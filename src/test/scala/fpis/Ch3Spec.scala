@@ -108,5 +108,10 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.reverse(list1) == list2)
       }
     }
+    describe("Exercise 3.13 - foldLeft refactor") {
+      it("does the same thing as foldLeft") {
+        assert(SinglyLinkedList.sum4(SinglyLinkedList(1, 2, 3)) == 6)
+      }
+    }
   }
 }

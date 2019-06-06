@@ -34,6 +34,9 @@ object SinglyLinkedList {
   def reverse[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] =
     foldLeft(l, apply[A]())((y, x) => Cons(x, y))
 
+  def foldLeft2[A, B](as: SinglyLinkedList[A], z: B)(f: (A, B) => B): B = {
+  }
+
   def sum2(ns: SinglyLinkedList[Int]) = foldRight(ns, 0)(_ + _)
   def product2(ns: SinglyLinkedList[Double]) = foldRight(ns, 1.0)(_ * _)
   def length[A](as: SinglyLinkedList[A]): Int = foldRight(as, 0)((_, y) => y + 1)
@@ -41,6 +44,8 @@ object SinglyLinkedList {
   def sum3(ns: SinglyLinkedList[Int]) = foldLeft(ns, 0)(_ + _)
   def product3(ns: SinglyLinkedList[Double]) = foldLeft(ns, 1.0)(_ * _)
   def length3[A](as: SinglyLinkedList[A]): Int = foldLeft(as, 0)((y, _) => y + 1)
+
+  def sum4(ns: SinglyLinkedList[Int]) = foldLeft2(ns, 0)(_ + _)
 
   def tail[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] = l match {
     case Nil => Nil
