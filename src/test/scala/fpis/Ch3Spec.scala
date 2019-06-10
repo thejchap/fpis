@@ -121,5 +121,15 @@ class Ch3Spec extends FunSpec {
         assert(list2 == SinglyLinkedList(1, 2, 3, 4))
       }
     }
+    describe("Exercise 3.15 - concat") {
+      it("concats") {
+        val list1 = SinglyLinkedList(1, 2)
+        val list2 = SinglyLinkedList(3, 4)
+        val list3 = SinglyLinkedList(5, 6)
+        val list4 = SinglyLinkedList.concat(list1, list2, list3)
+
+        assert(list4 == SinglyLinkedList(1, 2, 3, 4, 5, 6))
+      }
+    }
   }
 }

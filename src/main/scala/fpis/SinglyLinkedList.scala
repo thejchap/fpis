@@ -74,6 +74,14 @@ object SinglyLinkedList {
     case _ => l
   }
 
+  def concat[A](ls: SinglyLinkedList[A]*): SinglyLinkedList[A] = {
+    @tailrec def concatHelper(l: SinglyLinkedList[A], t: SinglyLinkedList[A]*): SinglyLinkedList[A] =
+      if (t.tail.isEmpty) foldLeft(t.head, l)((a, b) => append(a, b))
+      else concatHelper(foldLeft(t.head, l)((a, b) => append(a, b)), t.tail: _*)
+
+    concatHelper(ls.head, ls.tail: _*)
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
