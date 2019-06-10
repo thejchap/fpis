@@ -34,7 +34,8 @@ object SinglyLinkedList {
   def reverse[A](l: SinglyLinkedList[A]): SinglyLinkedList[A] =
     foldLeft(l, apply[A]())((y, x) => Cons(x, y))
 
-  def foldLeft2[A, B](as: SinglyLinkedList[A], z: B)(f: (A, B) => B): B = {
+  def foldLeft2[A, B](as: SinglyLinkedList[A], z: B)(f: (B, A) => B): B = {
+    foldRight(reverse(as), z)(f)
   }
 
   def sum2(ns: SinglyLinkedList[Int]) = foldRight(ns, 0)(_ + _)
