@@ -113,5 +113,13 @@ class Ch3Spec extends FunSpec {
         assert(SinglyLinkedList.sum4(SinglyLinkedList(1, 2, 3)) == 6)
       }
     }
+    describe("Exercise 3.14 - append") {
+      it("appends") {
+        val list1 = SinglyLinkedList(1, 2, 3)
+        val list2 = SinglyLinkedList.append(list1, 4)
+
+        assert(list2 == SinglyLinkedList(1, 2, 3, 4))
+      }
+    }
   }
 }

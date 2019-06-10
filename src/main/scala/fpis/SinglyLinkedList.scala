@@ -57,6 +57,12 @@ object SinglyLinkedList {
     case Cons(_, xs) => Cons(x, xs)
   }
 
+  def append[A](l: SinglyLinkedList[A], x: A): SinglyLinkedList[A] = l match {
+    case Nil => apply(x)
+    case Cons(y, Nil) => apply(y, x)
+    case Cons(y, t) => Cons(y, append(t, x))
+  }
+
   def drop[A](l: SinglyLinkedList[A], n: Int): SinglyLinkedList[A] = (l, n) match {
     case (Nil, _) => l
     case (_, 0) => l
