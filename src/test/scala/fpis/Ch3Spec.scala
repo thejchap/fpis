@@ -131,5 +131,14 @@ class Ch3Spec extends FunSpec {
         assert(list4 == SinglyLinkedList(1, 2, 3, 4, 5, 6))
       }
     }
+    describe("Exercise 3.16 - incrBy1") {
+      it("increments by 1") {
+        val list1 = SinglyLinkedList(1, 2)
+        val list2 = SinglyLinkedList(2, 3)
+        val list3 = SinglyLinkedList.incrBy1(list1)
+
+        assert(list3 == list2)
+      }
+    }
   }
 }

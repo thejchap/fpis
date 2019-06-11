@@ -82,6 +82,11 @@ object SinglyLinkedList {
     concatHelper(ls.head, ls.tail: _*)
   }
 
+  def incrBy1(l: SinglyLinkedList[Int]): SinglyLinkedList[Int] = l match {
+    case Cons(x, xs) => Cons(x + 1, incrBy1(xs))
+    case _ => l
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
