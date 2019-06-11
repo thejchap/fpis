@@ -84,7 +84,12 @@ object SinglyLinkedList {
 
   def incrBy1(l: SinglyLinkedList[Int]): SinglyLinkedList[Int] = l match {
     case Cons(x, xs) => Cons(x + 1, incrBy1(xs))
-    case _ => l
+    case _ => Nil
+  }
+
+  def doubleToString(l: SinglyLinkedList[Double]): SinglyLinkedList[String] = l match {
+    case Cons(x, xs) => Cons(x.toString(), doubleToString(xs))
+    case _ => Nil
   }
 
   def apply[A](as: A*): SinglyLinkedList[A] =
