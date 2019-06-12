@@ -131,7 +131,7 @@ class Ch3Spec extends FunSpec {
         assert(list4 == SinglyLinkedList(1, 2, 3, 4, 5, 6))
       }
     }
-    describe("Exercise 3.16 - incrBy1") {
+    describe("Exercise 3.16/18 - incrBy1") {
       it("increments by 1") {
         val list1 = SinglyLinkedList(1, 2)
         val list2 = SinglyLinkedList(2, 3)
@@ -140,11 +140,20 @@ class Ch3Spec extends FunSpec {
         assert(list3 == list2)
       }
     }
-    describe("Exercise 3.17 - doubleToString") {
+    describe("Exercise 3.17/18 - doubleToString") {
       it("increments by 1") {
         val list1 = SinglyLinkedList(1.0, 2.5)
         val list2 = SinglyLinkedList("1.0", "2.5")
         val list3 = SinglyLinkedList.doubleToString(list1)
+
+        assert(list3 == list2)
+      }
+    }
+    describe("Exercise 3.19 - filter") {
+      it("filters") {
+        val list1 = SinglyLinkedList(1, 2, 3, 4, 5)
+        val list2 = SinglyLinkedList(2, 4)
+        val list3 = SinglyLinkedList.filter(list1)(_ % 2 == 0)
 
         assert(list3 == list2)
       }

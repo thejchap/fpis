@@ -82,13 +82,17 @@ object SinglyLinkedList {
     concatHelper(ls.head, ls.tail: _*)
   }
 
-  def incrBy1(l: SinglyLinkedList[Int]): SinglyLinkedList[Int] = l match {
-    case Cons(x, xs) => Cons(x + 1, incrBy1(xs))
+  def incrBy1(l: SinglyLinkedList[Int]): SinglyLinkedList[Int] = map(l)(_ + 1)
+  def doubleToString(l: SinglyLinkedList[Double]): SinglyLinkedList[String] = map(l)(_ toString())
+
+  def map[A, B](as: SinglyLinkedList[A])(f: A => B): SinglyLinkedList[B] = as match {
+    case Cons(x, xs) => Cons(f(x), map(xs)(f))
     case _ => Nil
   }
 
-  def doubleToString(l: SinglyLinkedList[Double]): SinglyLinkedList[String] = l match {
-    case Cons(x, xs) => Cons(x.toString(), doubleToString(xs))
+  def filter[A](as: SinglyLinkedList[A])(f: A => Boolean): SinglyLinkedList[A] = as match {
+    case Cons(x, xs) if f(x) => Cons(x, filter(xs)(f))
+    case Cons(_, xs) => filter(xs)(f)
     case _ => Nil
   }
 
