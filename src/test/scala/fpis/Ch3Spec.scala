@@ -158,5 +158,14 @@ class Ch3Spec extends FunSpec {
         assert(list3 == list2)
       }
     }
+    describe("Exercise 3.20 - flatMap") {
+      it("flat maps") {
+        val list1 = SinglyLinkedList(1, 2, 3)
+        val list2 = SinglyLinkedList(1, 1, 2, 2, 3, 3)
+        val list3 = SinglyLinkedList.flatMap(list1)(i => SinglyLinkedList(i, i))
+
+        assert(list3 == list2)
+      }
+    }
   }
 }

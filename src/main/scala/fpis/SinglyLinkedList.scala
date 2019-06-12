@@ -90,6 +90,11 @@ object SinglyLinkedList {
     case _ => Nil
   }
 
+  def flatMap[A, B](as: SinglyLinkedList[A])(f: A => SinglyLinkedList[B]): SinglyLinkedList[B] = as match {
+    case Cons(x, xs) => concat(f(x), flatMap(xs)(f))
+    case _ => Nil
+  }
+
   def filter[A](as: SinglyLinkedList[A])(f: A => Boolean): SinglyLinkedList[A] = as match {
     case Cons(x, xs) if f(x) => Cons(x, filter(xs)(f))
     case Cons(_, xs) => filter(xs)(f)
