@@ -25,6 +25,7 @@ trait Option[+A] {
   }
 
   def filter(f: A => Boolean): Option[A] = this match {
+    case Some(value) if f(value) => this
     case _ => None
   }
 }
