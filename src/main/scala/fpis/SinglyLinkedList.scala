@@ -114,6 +114,12 @@ object SinglyLinkedList {
     case (Cons(x, t1), Cons(y, t2)) => Cons(f(x, y), zipWith(t1, t2)(f))
   }
 
+  def hasSubSequence[A](sup: SinglyLinkedList[A], sub: SinglyLinkedList[A]): Boolean = (sup, sub) match {
+    case (Cons(x, _), Cons(y, Nil)) => x == y
+    case (Cons(x, t1), Cons(y, t2)) if x == y => hasSubSequence(t1, t2)
+    case (Cons(_, t1), _) => hasSubSequence(t1, sub)
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))

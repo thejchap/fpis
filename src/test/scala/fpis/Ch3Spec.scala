@@ -196,5 +196,26 @@ class Ch3Spec extends FunSpec {
         assert(list3 == list4)
       }
     }
+    describe("Exercise 3.24 - hasSubSequence") {
+      it("detects if subsequence is in list") {
+        val list1 = SinglyLinkedList(1, 2, 3, 4)
+        val list2 = SinglyLinkedList(1, 2)
+        val res1 = SinglyLinkedList.hasSubSequence(list1, list2)
+
+        assert(res1 == true)
+
+        val list3 = SinglyLinkedList(1, 2, 3, 4)
+        val list4 = SinglyLinkedList(1, 5)
+        val res2 = SinglyLinkedList.hasSubSequence(list3, list4)
+
+        assert(res2 == false)
+
+        val list5 = SinglyLinkedList(1, 2, 3, 4)
+        val list6 = SinglyLinkedList(3, 4)
+        val res3 = SinglyLinkedList.hasSubSequence(list5, list6)
+
+        assert(res3 == true)
+      }
+    }
   }
 }
