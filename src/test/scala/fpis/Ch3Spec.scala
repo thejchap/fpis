@@ -186,5 +186,15 @@ class Ch3Spec extends FunSpec {
         assert(list3 == list4)
       }
     }
+    describe("Exercise 3.23 - zipWith") {
+      it("sums elements in a list") {
+        val list1 = SinglyLinkedList(1, 2, 3)
+        val list2 = SinglyLinkedList(4, 5, 6)
+        val list3 = SinglyLinkedList.zipWith(list1, list2)(_ + _)
+        val list4 = SinglyLinkedList(5, 7, 9)
+
+        assert(list3 == list4)
+      }
+    }
   }
 }

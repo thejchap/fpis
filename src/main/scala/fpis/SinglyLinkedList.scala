@@ -109,6 +109,11 @@ object SinglyLinkedList {
     case (Cons(x, t1), Cons(y, t2)) => Cons(x + y, sumElements(t1, t2))
   }
 
+  def zipWith[A](l1: SinglyLinkedList[A], l2: SinglyLinkedList[A])(f: (A, A) => A): SinglyLinkedList[A] = (l1, l2) match {
+    case (Nil, Nil) => Nil
+    case (Cons(x, t1), Cons(y, t2)) => Cons(f(x, y), zipWith(t1, t2)(f))
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
