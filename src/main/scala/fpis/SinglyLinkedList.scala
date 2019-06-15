@@ -101,6 +101,9 @@ object SinglyLinkedList {
     case _ => Nil
   }
 
+  def flatMapFilter[A](as: SinglyLinkedList[A])(f: A => Boolean): SinglyLinkedList[A] =
+    flatMap(as)(a => if (f(a)) Cons(a, Nil) else Nil)
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
