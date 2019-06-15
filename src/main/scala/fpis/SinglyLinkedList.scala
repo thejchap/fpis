@@ -104,6 +104,11 @@ object SinglyLinkedList {
   def flatMapFilter[A](as: SinglyLinkedList[A])(f: A => Boolean): SinglyLinkedList[A] =
     flatMap(as)(a => if (f(a)) Cons(a, Nil) else Nil)
 
+  def sumElements(l1: SinglyLinkedList[Int], l2: SinglyLinkedList[Int]): SinglyLinkedList[Int] = (l1, l2) match {
+    case (Nil, Nil) => Nil
+    case (Cons(x, t1), Cons(y, t2)) => Cons(x + y, sumElements(t1, t2))
+  }
+
   def apply[A](as: A*): SinglyLinkedList[A] =
     if (as isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
