@@ -47,5 +47,16 @@ class Ch4Spec extends FunSpec {
         assert(res2 == "hacker")
       }
     }
+    describe("orElse") {
+      it("gets with a fallback to a 2nd option") {
+        val res = Employee.lookupByNameNone("hacker") orElse(Employee.lookupByNameSome("tenderlove"))
+
+        assert(res.map(_ name) == Some("tenderlove"))
+
+        val res2 = Employee.lookupByNameSome("hacker") orElse(Employee.lookupByNameSome("tenderlove"))
+
+        assert(res2.map(_ name) == Some("hacker"))
+      }
+    }
   }
 }
