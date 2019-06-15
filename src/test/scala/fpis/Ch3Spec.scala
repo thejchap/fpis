@@ -1,5 +1,5 @@
 import org.scalatest.FunSpec
-import fpis.{SinglyLinkedList, Cons, Nil}
+import fpis.{SinglyLinkedList, Cons, Nil, Tree, Leaf, Branch}
 
 class Ch3Spec extends FunSpec {
   describe("SinglyLinkedList") {
@@ -215,6 +215,76 @@ class Ch3Spec extends FunSpec {
         val res3 = SinglyLinkedList.hasSubSequence(list5, list6)
 
         assert(res3 == true)
+      }
+    }
+    describe("Exercise 3.25 - Tree#size") {
+      it("returns the number of nodes/branches in the tree") {
+        val tree = Branch(Leaf(1), Leaf(2))
+
+        assert(Tree.size(tree) == 3)
+
+        val tree2 = Branch(Branch(Leaf(1), Leaf(2)), Leaf(2))
+
+        assert(Tree.size(tree2) == 5)
+      }
+    }
+    describe("Exercise 3.26 - Tree#maximum") {
+      it("returns the max value in the tree") {
+        val tree = Branch(Leaf(1), Leaf(2))
+
+        assert(Tree.maximum(tree) == 2)
+
+        val tree2 = Branch(Branch(Leaf(1), Leaf(5)), Leaf(2))
+
+        assert(Tree.maximum(tree2) == 5)
+      }
+    }
+    describe("Exercise 3.27 - Tree#depth") {
+      it("returns the depth") {
+        val tree = Branch(Leaf(1), Leaf(2))
+
+        assert(Tree.depth(tree) == 2)
+
+        val tree2 = Branch(Branch(Leaf(1), Leaf(5)), Leaf(2))
+
+        assert(Tree.depth(tree2) == 3)
+      }
+    }
+    describe("Exercise 3.29 - Tree#map") {
+      it("performs an operation on every node") {
+        val tree = Branch(Leaf(1), Leaf(2))
+        val tree2 = Branch(Leaf(2), Leaf(4))
+
+        assert(Tree.map(tree)(_ * 2) == tree2)
+      }
+    }
+    describe("Exercise 3.30 - Tree#fold") {
+      it("performs an operation on every node") {
+        val tree = Branch(Leaf(1), Leaf(2))
+        val tree2 = Branch(Leaf(2), Leaf(4))
+
+        assert(Tree.size2(tree) == 3)
+
+        val tree3 = Branch(Leaf(1), Leaf(2))
+
+        assert(Tree.maximum2(tree3) == 2)
+
+        val tree4 = Branch(Branch(Leaf(1), Leaf(5)), Leaf(2))
+
+        assert(Tree.maximum2(tree4) == 5)
+
+        val tree5 = Branch(Leaf(1), Leaf(2))
+
+        assert(Tree.depth2(tree5) == 2)
+
+        val tree6 = Branch(Branch(Leaf(1), Leaf(5)), Leaf(2))
+
+        assert(Tree.depth2(tree6) == 3)
+
+        val tree7 = Branch(Leaf(1), Leaf(2))
+        val tree8 = Branch(Leaf(2), Leaf(4))
+
+        assert(Tree.map2(tree7)(_ * 2) == tree8)
       }
     }
   }
