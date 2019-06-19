@@ -85,5 +85,18 @@ class Ch4Spec extends FunSpec {
         assert(quote == Some(2.0))
       }
     }
+    describe("Exercise 4.4 - sequence") {
+      it("returns none if any item is none") {
+        val list = List(Some(1), Some(2), Some(3))
+        val res = Ch4.sequence(list)
+
+        assert(res == Some(List(1, 2, 3)))
+
+        val list2 = List(Some(1), None, Some(3))
+        val res2 = Ch4.sequence(list2)
+
+        assert(res2 == None)
+      }
+    }
   }
 }

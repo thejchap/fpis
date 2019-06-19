@@ -27,4 +27,8 @@ object Ch4 {
     case (Some(x), Some(y)) => Some(f(x, y))
     case _ => None
   }
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    try Some(a.map { case Some(a) => a })
+    catch { case e: Exception => None }
 }
