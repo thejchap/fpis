@@ -1,5 +1,5 @@
 import org.scalatest.FunSpec
-import fpis.{Option, None, Some}
+import fpis.{Option, None, Some, Ch4}
 
 case class Employee(name: String, department: String, manager: Option[String] = None)
 
@@ -56,6 +56,14 @@ class Ch4Spec extends FunSpec {
         val res2 = Employee.lookupByNameSome("hacker") orElse(Employee.lookupByNameSome("tenderlove"))
 
         assert(res2.map(_ name) == Some("hacker"))
+      }
+    }
+    describe("Exercise 4.2 - variance") {
+      it("returns variance of a sequence of doubles") {
+        val seq = Seq(1,0, 3.0)
+        val res = Ch4.variance(seq)
+        val expected = Some(1.5555555555555556)
+        assert(res == expected)
       }
     }
   }
