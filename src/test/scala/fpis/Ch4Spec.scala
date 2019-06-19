@@ -98,5 +98,21 @@ class Ch4Spec extends FunSpec {
         assert(res2 == None)
       }
     }
+    describe("Exercise 4.5 - traverse") {
+      it("returns the list if the fn evaluates for all") {
+        val l = List("1", "2", "3")
+        val fn = (x: String) => Some(x.toInt)
+        val res = Ch4.traverse(l)(fn)
+        val expected = Some(List(1, 2, 3))
+
+        assert(res == expected)
+
+        val l2 = List("1", "2", "Q")
+        val res2 = Ch4.traverse(l2)(fn)
+        val expected2 = None
+
+        assert(res2 == expected2)
+      }
+    }
   }
 }

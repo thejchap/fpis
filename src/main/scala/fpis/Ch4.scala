@@ -31,4 +31,9 @@ object Ch4 {
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
     try Some(a.map { case Some(a) => a })
     catch { case e: Exception => None }
+
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = {
+    try Some(a.map(x => f(x) match { case Some(y) => y }))
+    catch { case e: Exception => None }
+  }
 }
