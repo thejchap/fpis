@@ -23,10 +23,11 @@ object Ch4 {
     try Some(a)
     catch { case e: Exception => None }
 
-  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = (a, b) match {
-    case (Some(x), Some(y)) => Some(f(x, y))
-    case _ => None
-  }
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+    for {
+      aa <- a
+      bb <- b
+    } yield f(aa, bb)
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] =
     try Some(a.map { case Some(a) => a })
