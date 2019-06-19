@@ -7,6 +7,7 @@ object Employee {
   def lookupByNameNone(name: String): Option[Employee] = {
     None
   }
+
   def lookupByNameSome(name: String): Option[Employee] = {
     Some(Employee(name, "engineering", Some("martin odersky")))
   }
@@ -56,6 +57,17 @@ class Ch4Spec extends FunSpec {
         val res2 = Employee.lookupByNameSome("hacker") orElse(Employee.lookupByNameSome("tenderlove"))
 
         assert(res2.map(_ name) == Some("hacker"))
+      }
+    }
+    describe("filter") {
+      it("returns none if the filter doesnt match") {
+        val res = Employee.lookupByNameSome("hacker") filter(_.name == "tenderlove")
+
+        assert(res == None)
+
+        val res2 = Employee.lookupByNameSome("hacker") filter(_.name == "hacker")
+
+        assert(res2 == Some(Employee("hacker", "engineering", Some("martin odersky"))))
       }
     }
     describe("Exercise 4.2 - variance") {
