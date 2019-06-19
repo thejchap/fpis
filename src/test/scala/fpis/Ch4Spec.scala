@@ -78,5 +78,12 @@ class Ch4Spec extends FunSpec {
         assert(res == expected)
       }
     }
+    describe("Exercise 4.3 - map2") {
+      it("combines option values") {
+        val quote = Ch4.parseInsuranceRateQuote("1", "2")
+
+        assert(quote == Some(2.0))
+      }
+    }
   }
 }
