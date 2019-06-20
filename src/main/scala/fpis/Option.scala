@@ -20,7 +20,7 @@ trait Option[+A] {
   }
 
   def orElse[B >: A](ob: => Option[B]): Option[B] = this match {
-    case Some(value) => this
+    case Some(_) => this
     case _ => ob
   }
 

@@ -1,16 +1,18 @@
 import org.scalatest.FunSpec
-import fpis.{Option, None, Some, Ch4}
+import fpis.{Option, None, Some, Ch4, Either, Left, Right}
 
 case class Employee(name: String, department: String, manager: Option[String] = None)
+case class Employee2(name: String, department: String, manager: Either[String, String] = Left("Not found"))
 
 object Employee {
-  def lookupByNameNone(name: String): Option[Employee] = {
-    None
-  }
+  def lookupByNameNone(name: String): Option[Employee] = None
+  def lookupByNameNone2(name: String): Either[String, Employee2] = Left("Not found")
 
-  def lookupByNameSome(name: String): Option[Employee] = {
+  def lookupByNameSome(name: String): Option[Employee] =
     Some(Employee(name, "engineering", Some("martin odersky")))
-  }
+
+  def lookupByNameSome2(name: String): Either[String, Employee2] =
+    Right(Employee2(name, "engineering", Right("martin odersky")))
 }
 
 class Ch4Spec extends FunSpec {
@@ -112,6 +114,49 @@ class Ch4Spec extends FunSpec {
         val expected2 = None
 
         assert(res2 == expected2)
+      }
+    }
+    describe("Exercise 4.6 - Either") {
+      it("maps") {
+        val res = Employee.lookupByNameNone2("hacker") map(_.department)
+
+        assert(res == Left("Not found"))
+
+        val res2 = Employee.lookupByNameSome2("hacker") map(_.department)
+
+        assert(res2 == Right("engineering"))
+      }
+      it("flatMaps") {
+        val res = Employee.lookupByNameNone2("hacker") flatMap(_.manager)
+
+        assert(res == Left("Not found"))
+
+        val res2 = Employee.lookupByNameSome2("hacker") flatMap(_.manager)
+
+        assert(res2 == Right("martin odersky"))
+      }
+      it("orElses") {
+        val res = Employee.lookupByNameNone2("hacker") orElse(Employee.lookupByNameSome2("tenderlove"))
+
+        assert(res.map(_ name) == Right("tenderlove"))
+
+        val res2 = Employee.lookupByNameSome2("hacker") orElse(Employee.lookupByNameSome2("tenderlove"))
+
+        assert(res2.map(_ name) == Right("hacker"))
+      }
+      it("map2s") {
+        def Try[A](a: => A): Either[Exception, A] =
+          try Right(a)
+          catch { case e: Exception => Left(e) }
+
+        def parseInsuranceRateQuote(age: String, numTix: String): Either[Exception, Double] = for {
+          a <- Try { age toInt }
+          t <- Try { numTix toInt }
+        } yield Ch4.insuranceRateQuote(a, t)
+
+        val quote = parseInsuranceRateQuote("1", "2")
+
+        assert(quote == Right(2.0))
       }
     }
   }
