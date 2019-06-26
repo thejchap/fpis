@@ -37,4 +37,13 @@ object Ch4 {
     try Some(a.map(x => f(x) match { case Some(y) => y }))
     catch { case e: Exception => None }
   }
+
+  def sequence2[E, A](a: List[Either[E, A]]): Either[E, List[A]] =
+    try Right(a.map { case Right(a) => a })
+    catch { case e: E => Left(e) }
+
+  def traverse2[E, A, B](a: List[A])(f: A => Either[E, B]): Either[E, List[B]] = {
+    try Right(a.map(x => f(x) match { case Right(y) => y }))
+    catch { case e: E => Left(e) }
+  }
 }

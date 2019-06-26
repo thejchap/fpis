@@ -159,5 +159,30 @@ class Ch4Spec extends FunSpec {
         assert(quote == Right(2.0))
       }
     }
+    describe("Exercise 4.7 - sequence/traverse") {
+      it("sequences") {
+        val list = List(Right(1), Right(2), Right(3))
+        val res = Ch4.sequence2(list)
+
+        assert(res == Right(List(1, 2, 3)))
+
+        val list2 = List(Right(1), Left("test"), Right(3))
+        val res2 = Ch4.sequence2(list2)
+
+        assert(res2.isInstanceOf[Left[scala.MatchError]])
+      }
+      it("traverses") {
+        val l = List("1", "2", "3")
+        val fn = (x: String) => Right(x.toInt)
+        val res = Ch4.traverse2(l)(fn)
+        val expected = Right(List(1, 2, 3))
+
+        assert(res == expected)
+
+        val l2 = List("1", "2", "Q")
+        val res2 = Ch4.traverse2(l2)(fn)
+        assert(res2.isInstanceOf[Left[java.lang.NumberFormatException]])
+      }
+    }
   }
 }
