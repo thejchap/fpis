@@ -21,4 +21,11 @@ class Ch5Spec extends FunSpec {
       assert(stream2.take(3) == List(1, 2))
     }
   }
+  describe("Exercise 5.2 - Stream#drop") {
+    it("skips the first n elements") {
+      val stream = Stream(1, 2, 3)
+
+      assert(stream.drop(2) == List(3))
+    }
+  }
 }
