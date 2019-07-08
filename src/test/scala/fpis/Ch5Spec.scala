@@ -28,4 +28,15 @@ class Ch5Spec extends FunSpec {
       assert(stream.drop(2) == List(3))
     }
   }
+  describe("Exercise 5.3 - Stream#takeWhile") {
+    it("returns elements while predicate is true") {
+      val stream = Stream(1, 2, 3)
+
+      assert(stream.takeWhile(_ < 3).toList == List(1, 2))
+
+      val stream2 = Stream(3, 2, 1)
+
+      assert(stream2.takeWhile(_ > 2).toList == List(3))
+    }
+  }
 }

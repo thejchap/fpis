@@ -11,6 +11,11 @@ sealed trait Stream[+A] {
     case (m, SCons(h, t)) => List(h()) ++ t().take(n - 1)
   }
 
+  def takeWhile(p: A => Boolean): Stream[A] = this match {
+    case SCons(h, t) if p(h()) => SCons(h, () => t().takeWhile(p))
+    case _ => Empty
+  }
+
   def drop(n: Int): List[A] = (n, this) match {
     case (_, Empty) => List()
     case (0, SCons(h, t)) => List(h()) ++ t().toList
