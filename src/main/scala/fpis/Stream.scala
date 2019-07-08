@@ -5,7 +5,13 @@ sealed trait Stream[+A] {
     case Empty => List()
     case SCons(h, t) => List(h()) ++ t().toList
   }
+
+  def take(n: Int): List[A] = (n, this) match {
+    case (0, _) | (_, Empty) => List()
+    case (m, SCons(h, t)) => List(h()) ++ t().take(n - 1)
+  }
 }
+
 case object Empty extends Stream[Nothing]
 case class SCons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
