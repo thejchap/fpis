@@ -39,4 +39,15 @@ class Ch5Spec extends FunSpec {
       assert(stream2.takeWhile(_ > 2).toList == List(3))
     }
   }
+  describe("Exercise 5.4 - Stream#forAll") {
+    it("checks if all elements match a given predicate") {
+      val stream = Stream(1, 2, 3)
+
+      assert(stream.forAll(_ < 4) == true)
+
+      val stream2 = Stream(1, 2, 3)
+
+      assert(stream2.forAll(_ < 2) == false)
+    }
+  }
 }

@@ -16,6 +16,14 @@ sealed trait Stream[+A] {
     case _ => Empty
   }
 
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
+    case SCons(h, t) => f(h(), t().foldRight(z)(f))
+    case _ => z
+  }
+
+  def forAll(p: A => Boolean): Boolean =
+    foldRight(true)((a, b) => p(a) && b)
+
   def drop(n: Int): List[A] = (n, this) match {
     case (_, Empty) => List()
     case (0, SCons(h, t)) => List(h()) ++ t().toList
