@@ -61,4 +61,11 @@ class Ch5Spec extends FunSpec {
       assert(stream2.takeWhile2(_ > 2).toList == List(3))
     }
   }
+  describe("Exercise 5.6 - Stream#headOption") {
+    it("optionally extracts head from stream") {
+      val stream = Stream(1, 2, 3)
+
+      assert(stream.headOption == Some(1))
+    }
+  }
 }

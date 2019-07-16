@@ -19,6 +19,12 @@ sealed trait Stream[+A] {
     case _ => Empty
   }
 
+  def headOption: scala.Option[A] =
+    foldRight[scala.Option[A]](scala.None)((_, b) => this match {
+      case SCons(h, _) => scala.Some(h())
+      case _ => b
+    })
+
   def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {
     case SCons(h, t) => f(h(), t().foldRight(z)(f))
     case _ => z
