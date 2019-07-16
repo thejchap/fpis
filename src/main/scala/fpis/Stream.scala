@@ -11,6 +11,9 @@ sealed trait Stream[+A] {
     case (m, SCons(h, t)) => List(h()) ++ t().take(n - 1)
   }
 
+  def takeWhile2(p: A => Boolean): Stream[A] =
+    foldRight(Stream[A]())((a, b) => if (p(a)) SCons(() => a, () => b) else b)
+
   def takeWhile(p: A => Boolean): Stream[A] = this match {
     case SCons(h, t) if p(h()) => SCons(h, () => t().takeWhile(p))
     case _ => Empty

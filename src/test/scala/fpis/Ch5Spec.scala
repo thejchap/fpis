@@ -50,4 +50,15 @@ class Ch5Spec extends FunSpec {
       assert(stream2.forAll(_ < 2) == false)
     }
   }
+  describe("Exercise 5.5 - Stream#takeWhile2") {
+    it("returns elements while predicate is true") {
+      val stream = Stream(1, 2, 3)
+
+      assert(stream.takeWhile2(_ < 3).toList == List(1, 2))
+
+      val stream2 = Stream(3, 2, 1)
+
+      assert(stream2.takeWhile2(_ > 2).toList == List(3))
+    }
+  }
 }
