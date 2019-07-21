@@ -22,8 +22,13 @@ sealed trait Stream[+A] {
     case _ => Empty
   }
 
-  def append[B >: A](x: B): Stream[B] =
+  def append[B >: A](x: => B): Stream[B] =
     foldRight(Stream[B](x))((a, b) => SCons(() => a, () => b))
+
+  def flatMap[B >: A](f: A => Stream[B]): Stream[B] =
+    foldRight(Stream[B]())((a, b) => {
+      f(a).foldRight(b)((x, y) => y append x)
+    }).foldRight(Stream[B]())((a, b) => b append a)
 
   def headOption: scala.Option[A] =
     foldRight[scala.Option[A]](scala.None)((_, b) => this match {

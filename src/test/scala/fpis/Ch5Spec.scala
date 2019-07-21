@@ -79,5 +79,12 @@ class Ch5Spec extends FunSpec {
 
       assert(stream.append(5).toList == List(1, 2, 3, 4, 5))
     }
+    it("flatMaps") {
+      val stream1 = Stream(1, 2, 3)
+      val stream2 = Stream(1, 1, 2, 2, 3, 3)
+      val stream3 = stream1.flatMap(i => Stream(i, i))
+
+      assert(stream3.toList == stream2.toList)
+    }
   }
 }
