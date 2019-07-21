@@ -87,4 +87,14 @@ class Ch5Spec extends FunSpec {
       assert(stream3.toList == stream2.toList)
     }
   }
+  describe("Exercise 5.8 - constant") {
+    it("returns an infinite stream with a given constant") {
+      assert(Stream.constant(1).headOption == Some(1))
+    }
+  }
+  describe("Exercise 5.9 - from") {
+    it("returns an infinite stream starting at a given int") {
+      assert(Stream.from(1).takeWhile(_ < 4).toList == List(1, 2, 3))
+    }
+  }
 }
