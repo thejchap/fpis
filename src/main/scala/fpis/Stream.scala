@@ -14,10 +14,16 @@ sealed trait Stream[+A] {
   def takeWhile2(p: A => Boolean): Stream[A] =
     foldRight(Stream[A]())((a, b) => if (p(a)) SCons(() => a, () => b) else b)
 
+  def filter(p: A => Boolean): Stream[A] =
+    foldRight(Stream[A]())((a, b) => if (p(a)) SCons(() => a, () => b) else b)
+
   def takeWhile(p: A => Boolean): Stream[A] = this match {
     case SCons(h, t) if p(h()) => SCons(h, () => t().takeWhile(p))
     case _ => Empty
   }
+
+  def append[B >: A](x: B): Stream[B] =
+    foldRight(Stream[B](x))((a, b) => SCons(() => a, () => b))
 
   def headOption: scala.Option[A] =
     foldRight[scala.Option[A]](scala.None)((_, b) => this match {

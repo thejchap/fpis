@@ -68,4 +68,16 @@ class Ch5Spec extends FunSpec {
       assert(stream.headOption == Some(1))
     }
   }
+  describe("Exercise 5.7 - Stream filter/append/flatMap") {
+    it("filters") {
+      val stream = Stream(1, 2, 3, 4)
+
+      assert(stream.filter(_ % 2 == 0).toList == List(2, 4))
+    }
+    it("appends") {
+      val stream = Stream(1, 2, 3, 4)
+
+      assert(stream.append(5).toList == List(1, 2, 3, 4, 5))
+    }
+  }
 }
