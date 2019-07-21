@@ -102,4 +102,9 @@ class Ch5Spec extends FunSpec {
       assert(Stream.fibs.takeWhile(_ < 9).toList == List(0, 1, 1, 2, 3, 5, 8))
     }
   }
+  describe("Exercise 5.11 - unfold") {
+    it("unfolds") {
+      assert(Stream.unfold(1)(s => scala.Some(s, s + 1)).takeWhile(_ < 4).toList == List(1, 2, 3))
+    }
+  }
 }

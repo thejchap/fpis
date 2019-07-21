@@ -63,6 +63,11 @@ object Stream {
 
   def empty[A]: Stream[A] = Empty
 
+  def unfold[A, S](z: S)(f: S => scala.Option[(A, S)]): Stream[A] = f(z) match {
+    case scala.None => Empty
+    case scala.Some((a, s)) => cons(a, unfold(s)(f))
+  }
+
   def constant[A](a: A): Stream[A] = cons(a, constant(a))
 
   def from(n: Int): Stream[Int] = cons(n, from(n + 1))
