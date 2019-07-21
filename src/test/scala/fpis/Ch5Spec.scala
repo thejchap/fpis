@@ -97,4 +97,9 @@ class Ch5Spec extends FunSpec {
       assert(Stream.from(1).takeWhile(_ < 4).toList == List(1, 2, 3))
     }
   }
+  describe("Exercise 5.10 - fibs") {
+    it("returns an infinite stream of fibs") {
+      assert(Stream.fibs.takeWhile(_ < 9).toList == List(0, 1, 1, 2, 3, 5, 8))
+    }
+  }
 }
