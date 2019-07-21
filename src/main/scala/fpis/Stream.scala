@@ -72,6 +72,15 @@ object Stream {
 
   def from(n: Int): Stream[Int] = cons(n, from(n + 1))
 
+  def fibs2: Stream[Int] = cons(0, cons(1, unfold(0, 1)(s => {
+    scala.Some(s._1 + s._2, (s._2, s._1 + s._2))
+  })))
+
+  def from2(n: Int): Stream[Int] = unfold(n)(s => scala.Some(s, s + 1))
+
+  def constant2(n: Int): Stream[Int] = unfold(n)(s => scala.Some(s, s))
+  def ones2: Stream[Int] = constant2(1)
+
   def fibs: Stream[Int] = {
     def fibsHelper(p1: Int, p2: Int): Stream[Int] =
       cons(p1 + p2, fibsHelper(p2, p1 + p2))

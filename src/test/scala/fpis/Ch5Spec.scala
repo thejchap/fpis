@@ -107,4 +107,18 @@ class Ch5Spec extends FunSpec {
       assert(Stream.unfold(1)(s => scala.Some(s, s + 1)).takeWhile(_ < 4).toList == List(1, 2, 3))
     }
   }
+  describe("Exercise 5.12 fibs, from, constant, ones") {
+    it("fibs") {
+      assert(Stream.fibs2.takeWhile(_ < 9).toList == List(0, 1, 1, 2, 3, 5, 8))
+    }
+    it("froms") {
+      assert(Stream.from2(1).takeWhile(_ < 4).toList == List(1, 2, 3))
+    }
+    it("constants") {
+      assert(Stream.constant2(1).headOption == Some(1))
+    }
+    it("ones") {
+      assert(Stream.ones2.headOption == Some(1))
+    }
+  }
 }
